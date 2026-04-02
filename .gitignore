@@ -127,4 +127,4 @@ chroma_data/
 chroma_jailbreak/
 
 # Logs
-*.log
+*.log.env
