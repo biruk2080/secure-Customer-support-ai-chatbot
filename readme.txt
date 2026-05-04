@@ -13,7 +13,7 @@ This project demonstrates how to build and safely a real-world LLM application �
 - 🤖 **Intelligent Chatbot** — GPT-4 powered, answers customer queries with context-aware RAG
 - 🔀 **Prompt Routing** — LangGraph routes each query to the appropriate node/handler
 - 🛡️ **Security Layer** — Multi-layer prompt injection detection (regex + vector + LLM)
-- 📊 **Monitoring** — Real-time Splunk logging at every stage: security violations, routing decisions, and chatbot responses
+- 📊 **Monitoring** — Real-time Splunk logging at every stage: security violations, routing decisions, chatbot responses, and latency tracking
 
 ---
 
@@ -55,7 +55,7 @@ User Input
                            │
                            ▼
                  ┌──────────────────┐
-                 │  Splunk Logging  │  ← response + metadata logged
+                 │  Splunk Logging  │  ← response + metadata + latency logged
                  └──────────────────┘
 ```
 
@@ -124,7 +124,7 @@ For inputs that pass the first two layers, a GPT-4 classifier makes a final judg
 
 ## 📊 Monitoring & Observability (Splunk)
 
-All events are logged to Splunk in real time covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
+All events are logged to Splunk in real time covering **security violations**, **allowed requests**, **routing decisions**, **chatbot responses**, and **latency metrics**, giving complete visibility at every stage of the pipeline.
 
 ### Security Event Log
 
@@ -150,6 +150,10 @@ Captured every time the router node classifies a query, dispatches node and resp
 | `routed_to` | Destination node, Which node handled the query (`product` / `billing` / `technical`) |
 | `router_reasoning` | LLM explanation for the routing decision |
 | `bot_response` | Final response text sent to the user |
+| `retrieval_time` | Time taken for vector database retrieval (seconds) |
+| `llm_response_time` | Time taken for LLM to generate response (seconds) |
+| `route_time` | Time taken for routing decision (seconds) |
+| `total_processing_time` | Total time for the entire pipeline (seconds) |
 
 Together, these two log types give full end-to-end visibility across every stage of the pipeline — all queryable in Splunk:
 
@@ -287,7 +291,7 @@ Gradio will launch a local web interface. To create a public shareable link:
 | 🔀 Agent Orchestration | LangGraph state machine with prompt routing |
 | 📚 RAG | Retrieval-augmented generation for grounded answers | Embeddings
 | 🔐 AI Security Engineering | 3-layer prompt injection defense system |
-| 📊 Monitoring & Observability | Splunk HEC integration with structured logging |
+| 📊 Monitoring & Observability | Splunk HEC integration with structured logging and latency tracking |
 | 🧪 Adversarial Testing | Security test suite for attack detection coverage |
 | 🏗️ System Design | Production-style architecture with separation of concerns |
 

@@ -10,10 +10,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 dotenv.load_dotenv()
 # file path 
-RESUME_PDF_PATH = "data/WORK.pdf"
+RESUME_PDF_PATH = "data/NovaCore_AI_Systems_Documentation.pdf"
 CHROMA_PATH = "chroma_data"
-JAILBREAK_PDG_PATH = "data/jailbreak.pdf"
-INJECTION_PDG_PATH = "data/injection.pdf"
+JAILBREAK_PDG_PATH = "data/prompt_injection_jailbreak_dataset.pdf"
+INJECTION_PDG_PATH = "data/prompt_injection_jailbreak_dataset.pdf"
 JAIBREAK_CHROMA_PATH = "chroma_jailbreak"
 # resume file 
 loader = PyPDFLoader(file_path=RESUME_PDF_PATH )

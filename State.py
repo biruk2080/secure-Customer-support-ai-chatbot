@@ -12,6 +12,36 @@ from langchain_openai import OpenAIEmbeddings
 from guardrail import detect_prompt_injection
 from splunk_logger import send_to_splunk
 import time
+from llmlingua import PromptCompressor
+
+from langchain_classic.retrievers.contextual_compression import ContextualCompressionRetriever
+from langchain_community.document_compressors import LLMLinguaCompressor
+
+# Initialize the compressor
+llm_lingua = PromptCompressor(
+        model_name="microsoft/llmlingua-2-bert-base-multilingual-cased-meetingbank",
+        use_llmlingua2=True,
+        device_map="cpu"
+    )
+def Compressor(question, prompt):
+    compressed_prompt = llm_lingua.compress_prompt(
+    prompt,
+    question=question,
+    rate=0.55,
+    condition_in_question="after_condition",
+    reorder_context="sort",
+    dynamic_context_compression_ratio=0.3,
+    condition_compare=True,
+    context_budget="+100",
+    rank_method="longllmlingua",
+    target_token=200)
+    return compressed_prompt["compressed_prompt"]
+
+llm_lingua = PromptCompressor(
+    model_name="microsoft/llmlingua-2-bert-base-multilingual-cased-meetingbank",
+    use_llmlingua2=True,
+    device_map="cpu"
+)
 # vector access instance 
 REVIEWS_CHROMA_PATH = "chroma_data/"
 JAIBREAK_CHROMA_PATH = "chroma_jailbreak"
@@ -58,15 +88,21 @@ def product(state: State):
     # Search the vector database for relevant reviews
     global retrieval_time, llm_response_time
     retrieval_time_start = time.time()
-
-    search_results = reviews_vector_db.similarity_search(state["input"], k=3)
+    compress = llm_lingua.compress_prompt(state["input"], instruction="", question="", target_token=200)
+    compressed_text = compress["compressed_prompt"]
+    # search_results = reviews_vector_db.similarity_search(state["input"], k=3)
+    search_results = reviews_vector_db.similarity_search(compressed_text, k=3)
     context = search_results[0].page_content if search_results else ""
-
+    print(f"Retrieval Time: {time.time() - retrieval_time_start}")
     retrieval_time = time.time() - retrieval_time_start
 
+
     llm_response_time_start = time.time()
-    result = llm.invoke(f"{state['input']}\nContext: {context}")
+    compress = Compressor(state["input"], context)
+    result = llm.invoke(compress)
+    # result = llm.invoke(f"{state['input']}\nContext: {context}")
     llm_response_time = time.time() - llm_response_time_start
+    print(f"LLM Response Time: {llm_response_time}")
     # Log retrieval and LLM response times to Splunk
     
     return {"output": result.content,"decision": state["decision"],"reason": state["reason"]}
@@ -203,3 +239,8 @@ def run_agent(user_input):
     })
 
     return final_state["output"]
+
+run_agent("What are the features of your latest product?")
+
+# Retrieval Time: 0.23349380493164062
+# LLM Response Time: 7.013408899307251
