@@ -6,12 +6,15 @@ A production-grade **AI-powered customer support chatbot** built with **LangChai
 
 This project demonstrates how to build and **safely deploy** a real-world LLM application — combining advanced AI capabilities with enterprise-grade security and observability. User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
 
-| Pillar | Description |
-|---|---|
-| 🤖 **Intelligent Chatbot** | GPT-4 powered, context-aware RAG responses across three knowledge domains |
-| 🔀 **Prompt Routing** | LangGraph state machine routes each query to the correct specialized node |
-| 🛡️ **Security Layer** | Multi-layer prompt injection defense — regex → vector similarity → LLM classifier |
-| 📊 **Monitoring** | Real-time Splunk logging: security violations, routing decisions, responses, and latency |
+## ✨ Features
+
+- 🔀 **Intelligent prompt routing** — LangGraph classifies each query and dispatches to the correct domain node automatically
+- 🛡️ **Three-layer security guardrail** — regex, vector similarity, and LLM-based injection detection running in sequence on every input
+- 📚 **Isolated RAG pipelines** — separate Chroma vector stores per domain prevent cross-domain retrieval noise
+- 📊 **Full Splunk observability** — every pipeline stage logged with structured fields and latency metrics
+- ⚡ **End-to-end latency tracking** — retrieval time, LLM response time, routing time, and total processing time captured per request
+- 🧪 **Adversarial test suite** — `test_cases.py` covers direct injection, obfuscated attacks, jailbreaks, and benign edge cases
+- 🖥️ **Gradio UI** — clean chat interface with optional public shareable link
 
 ---
 **Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
@@ -56,16 +59,6 @@ Each node retrieves from its **own isolated vector store**, ensuring responses a
 
 All events are logged to Splunk in real time via HTTP Event Collector (HEC) — covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
 All events are logged to Splunk in real time covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
-
-## ✨ Features
-
-- 🔀 **Intelligent prompt routing** — LangGraph classifies each query and dispatches to the correct domain node automatically
-- 🛡️ **Three-layer security guardrail** — regex, vector similarity, and LLM-based injection detection running in sequence on every input
-- 📚 **Isolated RAG pipelines** — separate Chroma vector stores per domain prevent cross-domain retrieval noise
-- 📊 **Full Splunk observability** — every pipeline stage logged with structured fields and latency metrics
-- ⚡ **End-to-end latency tracking** — retrieval time, LLM response time, routing time, and total processing time captured per request
-- 🧪 **Adversarial test suite** — `test_cases.py` covers direct injection, obfuscated attacks, jailbreaks, and benign edge cases
-- 🖥️ **Gradio UI** — clean chat interface with optional public shareable link
 
 ---
 
