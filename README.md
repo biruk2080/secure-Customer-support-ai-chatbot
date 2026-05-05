@@ -55,7 +55,7 @@ Each node retrieves from its **own isolated vector store**, ensuring responses a
 ---
 
 ## Architecture
-<img width="124" height="150" alt="full_pipeline_diagram" src="https://github.com/user-attachments/assets/93e3b163-4f6c-4c87-81db-4193ca1cd57d" />#
+<img width="800" height="150" alt="full_pipeline_diagram" src="https://github.com/user-attachments/assets/93e3b163-4f6c-4c87-81db-4193ca1cd57d" />#
 
 ![Uploading full_<svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
   <defs>
