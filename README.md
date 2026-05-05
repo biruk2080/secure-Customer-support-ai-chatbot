@@ -1,4 +1,4 @@
-🛡️ Secure AI Customer Support Chatbot
+🛡️ Secure AI Customer Assistance 
 
 A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**. User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
 
