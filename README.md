@@ -16,8 +16,6 @@ This project demonstrates how to build and **safely deploy** a real-world LLM ap
 - 🧪 **Adversarial test suite** — `test_cases.py` covers direct injection, obfuscated attacks, jailbreaks, and benign edge cases
 - 🖥️ **Gradio UI** — clean chat interface with optional public shareable link
 
-**Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
-
 ## Architecture
 ![Pipeline Diagram](full_pipeline_diagram.svg)
 
@@ -49,7 +47,7 @@ This project demonstrates how to build and **safely deploy** a real-world LLM ap
 | `billing` | Billing questions — payments, invoices, subscriptions, refunds | Billing records & policies |
 | `technical` | Technical support — troubleshooting, errors, configuration | Technical docs & FAQs |
 
-Each node retrieves from its **own isolated vector store**, ensuring responses are grounded in the most relevant domain-specific knowledge without cross-domain noise.
+Each node retrieves from its **own isolated vector store** to ensure responses are grounded in the most relevant domain-specific knowledge without cross-domain noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
 
 ---
 
