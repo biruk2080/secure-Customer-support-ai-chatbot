@@ -55,7 +55,7 @@ Each node retrieves from its **own isolated vector store**, ensuring responses a
 ---
 
 ## Architecture
-![Pipeline Diagram](docs/full_pipeline_diagram.svg)
+![Pipeline Diagram](full_pipeline_diagram.svg)
 
 Three defense layers run in sequence on every user input:
 
