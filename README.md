@@ -5,45 +5,40 @@ A production-grade **AI-powered customer support chatbot** built with **LangChai
 **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**.
 User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
 ---
-
 ## 🚀 Overview
-@@ -26,7 +26,7 @@ User Input
-┌─────────────────────────────────┐
-│        Security Layer           │
-│  [1] Rule-Based Filter (Regex)  │
-│  [2] Semantic Similarity (FAISS)│
-│  [2] Semantic Similarity(Chroma)│
-│  [3] LLM Classifier (GPT-4)     │
-└────────────┬────────────────────┘
-             │
-@@ -68,20 +68,17 @@ User Input
-| LLM | OpenAI GPT-4 |
-| Agent Framework | LangChain + LangGraph |
-| Retrieval (RAG) | LangChain OpenAI embedding RAG pipeline + vector store | 
-| Prompt Engineering | SystemMessage + HumanMessage 
-| Prompt Routing | LangGraph conditional edges / node routing |
-| Security – Rule-based | Regex pattern matching |
-| Security – Semantic | FAISS vector similarity search |
-| Security – Semantic | Chroma vector similarity search |
-| Security – LLM | GPT-4 classifier |
-| Monitoring | Splunk (HEC logging) |
-| UI | Gradio |
+
+This project demonstrates how to build and **safely deploy** a real-world LLM application — combining advanced AI capabilities with enterprise-grade security and observability.
+
+User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
+
+| Pillar | Description |
+|---|---|
+| 🤖 **Intelligent Chatbot** | GPT-4 powered, context-aware RAG responses across three knowledge domains |
+| 🔀 **Prompt Routing** | LangGraph state machine routes each query to the correct specialized node |
+| 🛡️ **Security Layer** | Multi-layer prompt injection defense — regex → vector similarity → LLM classifier |
+| 📊 **Monitoring** | Real-time Splunk logging: security violations, routing decisions, responses, and latency |
+
+---
+**Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
 
 ---
 
-## 🔀 Prompt Routing (LangGraph)
+## 🧠 Tech Stack
 
-User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**:
+| Layer | Technology |
+|---|---|
+| LLM | OpenAI GPT-4 |
+| Agent Framework | LangChain + LangGraph |
+| Retrieval (RAG) | LangChain + OpenAI Embeddings (`text-embedding-ada-002`) + Chroma |
+| Prompt Engineering | `SystemMessage` + `HumanMessage` |
+| Prompt Routing | LangGraph conditional edges / node routing |
+| Security — Rule-based | Regex pattern matching |
+| Security — Semantic | Chroma vector similarity (cosine) |
+| Security — LLM | GPT-4 binary classifier with reasoning trace |
+| Monitoring | Splunk HEC (HTTP Event Collector) |
+| UI | Gradio |
 
-```
-User Query
-    │
-    ▼
-@@ -98,30 +95,27 @@ User Query
-  └───────────────┴──────────────┘
-                  │
-                 END
-```
+---
 
 **Node responsibilities:**
 
@@ -163,13 +158,103 @@ Together, these two log types give full end-to-end visibility across every stage
 
 
 
-## 🚀 Future Improvements
+## ✨ Features
 
-- [ ] Expand RAG with a full product database
-- [ ] Add user authentication and session tracking
-- [ ] Deploy as REST API (FastAPI + Docker)
-- [ ] Add rate limiting and anomaly detection
-- [ ] Multi-turn memory with LangGraph persistence
-- [ ] Fine-tune injection classifier for domain-specific attacks
+- 🔀 **Intelligent prompt routing** — LangGraph classifies each query and dispatches to the correct domain node automatically
+- 🛡️ **Three-layer security guardrail** — regex, vector similarity, and LLM-based injection detection running in sequence on every input
+- 📚 **Isolated RAG pipelines** — separate Chroma vector stores per domain prevent cross-domain retrieval noise
+- 📊 **Full Splunk observability** — every pipeline stage logged with structured fields and latency metrics
+- ⚡ **End-to-end latency tracking** — retrieval time, LLM response time, routing time, and total processing time captured per request
+- 🧪 **Adversarial test suite** — `test_cases.py` covers direct injection, obfuscated attacks, jailbreaks, and benign edge cases
+- 🖥️ **Gradio UI** — clean chat interface with optional public shareable link
 
 ---
+
+## ⚙️ Installation
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/secure-ai-chatbot.git
+cd secure-ai-chatbot
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate      # Mac / Linux
+venv\Scripts\activate         # Windows
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## ▶️ Usage
+
+### Start the chatbot
+
+```bash
+python Gradio.py
+```
+
+Gradio launches a local interface at `http://localhost:7860`. To generate a public shareable link, set `share=True` in the `launch()` call inside `Gradio.py`:
+
+```python
+demo.launch(share=True)
+```
+
+### Run the security test suite
+
+```bash
+python test_cases.py
+```
+
+Runs all adversarial test cases against the three guardrail layers and prints detection coverage results.
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Required
+OPENAI_API_KEY=your_openai_api_key
+
+# Optional — Splunk monitoring
+SPLUNK_TOKEN=your_splunk_hec_token
+SPLUNK_URL=https://your-splunk-instance:8088
+```
+
+| Variable | Required | Description |
+|---|---|---|
+| `OPENAI_API_KEY` | ✅ Yes | OpenAI API key for GPT-4 and embeddings |
+| `SPLUNK_TOKEN` | ⬜ Optional | Splunk HEC token for real-time logging |
+| `SPLUNK_URL` | ⬜ Optional | Your Splunk HEC endpoint URL |
+
+> If Splunk variables are omitted, the app runs normally but logging is disabled.
+
+---
+
+## 🗂️ Project Structure
+
+```
+productChatBot/
+│
+├── Gradio.py           # Main chatbot + Gradio interface
+├── guardrail.py        # Prompt injection detection (all 3 layers)
+├── state.py            # Shared LangGraph state object
+├── vector_db.py        # Embeddings + Chroma vector stores + similarity search
+├── Splunk_logger.py    # Splunk HEC logging integration
+├── test_cases.py       # Adversarial security test suite
+├── requirements.txt    # Python dependencies
+├── .env                # Environment variables (not committed)
+└── README.md
+```
+
