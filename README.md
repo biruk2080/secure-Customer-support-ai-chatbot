@@ -1,15 +1,10 @@
 🛡️ Secure AI Customer Support Chatbot
 
-A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**.
-
-**AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**.
-User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
+A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**. User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
 ---
 ## 🚀 Overview
 
-This project demonstrates how to build and **safely deploy** a real-world LLM application — combining advanced AI capabilities with enterprise-grade security and observability.
-
-User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
+This project demonstrates how to build and **safely deploy** a real-world LLM application — combining advanced AI capabilities with enterprise-grade security and observability. User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
 
 | Pillar | Description |
 |---|---|
@@ -22,6 +17,8 @@ User queries are classified by an LLM-powered **router node** and dispatched to 
 **Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
 
 ---
+## Architecture
+![Pipeline Diagram](full_pipeline_diagram.svg)
 
 ## 🧠 Tech Stack
 
@@ -31,6 +28,7 @@ User queries are classified by an LLM-powered **router node** and dispatched to 
 | Agent Framework | LangChain + LangGraph |
 | Retrieval (RAG) | LangChain + OpenAI Embeddings (`text-embedding-ada-002`) + Chroma |
 | Prompt Engineering | `SystemMessage` + `HumanMessage` |
+| Prompt Optimization | LLMLingua Prompt compressor |
 | Prompt Routing | LangGraph conditional edges / node routing |
 | Security — Rule-based | Regex pattern matching |
 | Security — Semantic | Chroma vector similarity (cosine) |
@@ -54,8 +52,7 @@ Each node retrieves from its **own isolated vector store**, ensuring responses a
 
 ---
 
-## Architecture
-![Pipeline Diagram](full_pipeline_diagram.svg)
+
 
 Three defense layers run in sequence on every user input:
 
