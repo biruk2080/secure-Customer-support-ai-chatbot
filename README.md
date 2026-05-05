@@ -18,7 +18,6 @@ This project demonstrates how to build and **safely deploy** a real-world LLM ap
 
 **Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
 
----
 ## Architecture
 ![Pipeline Diagram](full_pipeline_diagram.svg)
 
