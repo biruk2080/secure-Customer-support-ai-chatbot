@@ -16,7 +16,6 @@ This project demonstrates how to build and **safely deploy** a real-world LLM ap
 - 🧪 **Adversarial test suite** — `test_cases.py` covers direct injection, obfuscated attacks, jailbreaks, and benign edge cases
 - 🖥️ **Gradio UI** — clean chat interface with optional public shareable link
 
----
 **Why separate vector stores?** Prevents cross-domain retrieval noise, allows each store to be updated independently, and enables domain-specific chunking strategies per node.
 
 ---
