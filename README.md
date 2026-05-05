@@ -1,4 +1,4 @@
-<img width="124" height="150" alt="full_pipeline_diagram" src="https://github.com/user-attachments/assets/93e3b163-4f6c-4c87-81db-4193ca1cd57d" /># 🛡️ Secure AI Customer Support Chatbot
+🛡️ Secure AI Customer Support Chatbot
 
 A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**.
 
@@ -55,6 +55,8 @@ Each node retrieves from its **own isolated vector store**, ensuring responses a
 ---
 
 ## Architecture
+<img width="124" height="150" alt="full_pipeline_diagram" src="https://github.com/user-attachments/assets/93e3b163-4f6c-4c87-81db-4193ca1cd57d" />#
+
 ![Uploading full_<svg width="100%" viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
