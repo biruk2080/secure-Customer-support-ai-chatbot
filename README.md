@@ -25,7 +25,7 @@ This project demonstrates how to build and **safely deploy** a real-world LLM ap
 |---|---|
 | LLM | OpenAI GPT-4 |
 | Agent Framework | LangChain + LangGraph |
-| Retrieval (RAG) | LangChain + OpenAI Embeddings (`text-embedding-ada-002`) + Chroma |
+| Retrieval (RAG) | LangChain + PyPDFLoader + OpenAI Embeddings + Chroma |
 | Prompt Engineering | `SystemMessage` + `HumanMessage` |
 | Prompt Optimization | LLMLingua Prompt compressor |
 | Prompt Routing | LangGraph conditional edges / node routing |
