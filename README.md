@@ -53,7 +53,7 @@ Each node retrieves from its **own isolated vector store** to ensure responses a
 
 ## 📊 Monitoring & Observability (Splunk)
 
-All events are logged to Splunk in real time via HTTP Event Collector (HEC) — covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
+All events are logged to Splunk in real time — covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
 All events are logged to Splunk in real time covering **security violations**, **allowed requests**, **routing decisions**, and **chatbot responses**, giving complete visibility at every stage of the pipeline.
 
 ---
