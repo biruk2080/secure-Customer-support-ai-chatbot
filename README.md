@@ -107,29 +107,6 @@ Runs all adversarial test cases against the three guardrail layers and prints de
 
 ---
 
-## 🔑 Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-# Required
-OPENAI_API_KEY=your_openai_api_key
-
-# Optional — Splunk monitoring
-SPLUNK_TOKEN=your_splunk_hec_token
-SPLUNK_URL=https://your-splunk-instance:8088
-```
-
-| Variable | Required | Description |
-|---|---|---|
-| `OPENAI_API_KEY` | ✅ Yes | OpenAI API key for GPT-4 and embeddings |
-| `SPLUNK_TOKEN` | ⬜ Optional | Splunk HEC token for real-time logging |
-| `SPLUNK_URL` | ⬜ Optional | Your Splunk HEC endpoint URL |
-
-> If Splunk variables are omitted, the app runs normally but logging is disabled.
-
----
-
 ## 🗂️ Project Structure
 
 ```
