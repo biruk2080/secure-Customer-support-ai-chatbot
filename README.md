@@ -1,10 +1,10 @@
 🛡️ Secure AI Customer Assistance 
 
-A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG**, featuring intelligent **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**. User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
+A production-grade **AI-powered customer support chatbot** built with **LangChain**, **LangGraph**, **GPT-4**, and **RAG pipeline**, featuring **prompt routing**, a **multi-layer security system**, and real-time **monitoring via Splunk**. User queries are classified by an LLM-powered router node and dispatched to one of three specialized handler nodes, each with its **own dedicated RAG pipeline**
 
 ## 🚀 Overview
 
-This project demonstrates how to build and **safely deploy** a real-world LLM application — combining advanced AI capabilities with enterprise-grade security and observability. User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
+This project demonstrates how to build and **safely deploy** a real-world LLM application — combining AI capabilities with enterprise-grade security and observability. User queries are classified by an LLM-powered **router node** and dispatched to one of three **specialized handler nodes**, each backed by its own **isolated RAG pipeline** grounded in domain-specific knowledge which helps easily update each RAG separately without affect other. Every request — whether blocked or processed — is fully logged to Splunk with structured metadata and latency metrics.
 
 ## ✨ Features
 
